@@ -1,0 +1,870 @@
+{
+ "_comment": "Request bodies for /Auth/sign, shared by every example in this repository. A case passes when the payload would pass AuthService: printable ASCII (it travels in the X-Sign-Payload header), valid JSON, its \"data\" decodes back to the exact body, and the signature verifies. rejected: true means the body is not valid UTF-8 and sign must reject it with HTTP 400 (Kong cannot forward such a body to AuthService). expectedData is the exact escaped \"data\" that the C# example (System.Text.Json's default encoder) produces; examples whose JSON encoder escapes differently only check that it decodes back to the body.",
+ "cases": [
+  {
+   "name": "ascii 0x00",
+   "bodyHex": "00",
+   "expectedData": "\\u0000"
+  },
+  {
+   "name": "ascii 0x01",
+   "bodyHex": "01",
+   "expectedData": "\\u0001"
+  },
+  {
+   "name": "ascii 0x02",
+   "bodyHex": "02",
+   "expectedData": "\\u0002"
+  },
+  {
+   "name": "ascii 0x03",
+   "bodyHex": "03",
+   "expectedData": "\\u0003"
+  },
+  {
+   "name": "ascii 0x04",
+   "bodyHex": "04",
+   "expectedData": "\\u0004"
+  },
+  {
+   "name": "ascii 0x05",
+   "bodyHex": "05",
+   "expectedData": "\\u0005"
+  },
+  {
+   "name": "ascii 0x06",
+   "bodyHex": "06",
+   "expectedData": "\\u0006"
+  },
+  {
+   "name": "ascii 0x07",
+   "bodyHex": "07",
+   "expectedData": "\\u0007"
+  },
+  {
+   "name": "ascii 0x08",
+   "bodyHex": "08",
+   "expectedData": "\\b"
+  },
+  {
+   "name": "ascii 0x09",
+   "bodyHex": "09",
+   "expectedData": "\\t"
+  },
+  {
+   "name": "ascii 0x0A",
+   "bodyHex": "0a",
+   "expectedData": "\\n"
+  },
+  {
+   "name": "ascii 0x0B",
+   "bodyHex": "0b",
+   "expectedData": "\\u000B"
+  },
+  {
+   "name": "ascii 0x0C",
+   "bodyHex": "0c",
+   "expectedData": "\\f"
+  },
+  {
+   "name": "ascii 0x0D",
+   "bodyHex": "0d",
+   "expectedData": "\\r"
+  },
+  {
+   "name": "ascii 0x0E",
+   "bodyHex": "0e",
+   "expectedData": "\\u000E"
+  },
+  {
+   "name": "ascii 0x0F",
+   "bodyHex": "0f",
+   "expectedData": "\\u000F"
+  },
+  {
+   "name": "ascii 0x10",
+   "bodyHex": "10",
+   "expectedData": "\\u0010"
+  },
+  {
+   "name": "ascii 0x11",
+   "bodyHex": "11",
+   "expectedData": "\\u0011"
+  },
+  {
+   "name": "ascii 0x12",
+   "bodyHex": "12",
+   "expectedData": "\\u0012"
+  },
+  {
+   "name": "ascii 0x13",
+   "bodyHex": "13",
+   "expectedData": "\\u0013"
+  },
+  {
+   "name": "ascii 0x14",
+   "bodyHex": "14",
+   "expectedData": "\\u0014"
+  },
+  {
+   "name": "ascii 0x15",
+   "bodyHex": "15",
+   "expectedData": "\\u0015"
+  },
+  {
+   "name": "ascii 0x16",
+   "bodyHex": "16",
+   "expectedData": "\\u0016"
+  },
+  {
+   "name": "ascii 0x17",
+   "bodyHex": "17",
+   "expectedData": "\\u0017"
+  },
+  {
+   "name": "ascii 0x18",
+   "bodyHex": "18",
+   "expectedData": "\\u0018"
+  },
+  {
+   "name": "ascii 0x19",
+   "bodyHex": "19",
+   "expectedData": "\\u0019"
+  },
+  {
+   "name": "ascii 0x1A",
+   "bodyHex": "1a",
+   "expectedData": "\\u001A"
+  },
+  {
+   "name": "ascii 0x1B",
+   "bodyHex": "1b",
+   "expectedData": "\\u001B"
+  },
+  {
+   "name": "ascii 0x1C",
+   "bodyHex": "1c",
+   "expectedData": "\\u001C"
+  },
+  {
+   "name": "ascii 0x1D",
+   "bodyHex": "1d",
+   "expectedData": "\\u001D"
+  },
+  {
+   "name": "ascii 0x1E",
+   "bodyHex": "1e",
+   "expectedData": "\\u001E"
+  },
+  {
+   "name": "ascii 0x1F",
+   "bodyHex": "1f",
+   "expectedData": "\\u001F"
+  },
+  {
+   "name": "ascii 0x20",
+   "bodyHex": "20",
+   "expectedData": " "
+  },
+  {
+   "name": "ascii 0x21",
+   "bodyHex": "21",
+   "expectedData": "!"
+  },
+  {
+   "name": "ascii 0x22",
+   "bodyHex": "22",
+   "expectedData": "\\u0022"
+  },
+  {
+   "name": "ascii 0x23",
+   "bodyHex": "23",
+   "expectedData": "#"
+  },
+  {
+   "name": "ascii 0x24",
+   "bodyHex": "24",
+   "expectedData": "$"
+  },
+  {
+   "name": "ascii 0x25",
+   "bodyHex": "25",
+   "expectedData": "%"
+  },
+  {
+   "name": "ascii 0x26",
+   "bodyHex": "26",
+   "expectedData": "\\u0026"
+  },
+  {
+   "name": "ascii 0x27",
+   "bodyHex": "27",
+   "expectedData": "\\u0027"
+  },
+  {
+   "name": "ascii 0x28",
+   "bodyHex": "28",
+   "expectedData": "("
+  },
+  {
+   "name": "ascii 0x29",
+   "bodyHex": "29",
+   "expectedData": ")"
+  },
+  {
+   "name": "ascii 0x2A",
+   "bodyHex": "2a",
+   "expectedData": "*"
+  },
+  {
+   "name": "ascii 0x2B",
+   "bodyHex": "2b",
+   "expectedData": "\\u002B"
+  },
+  {
+   "name": "ascii 0x2C",
+   "bodyHex": "2c",
+   "expectedData": ","
+  },
+  {
+   "name": "ascii 0x2D",
+   "bodyHex": "2d",
+   "expectedData": "-"
+  },
+  {
+   "name": "ascii 0x2E",
+   "bodyHex": "2e",
+   "expectedData": "."
+  },
+  {
+   "name": "ascii 0x2F",
+   "bodyHex": "2f",
+   "expectedData": "/"
+  },
+  {
+   "name": "ascii 0x30",
+   "bodyHex": "30",
+   "expectedData": "0"
+  },
+  {
+   "name": "ascii 0x31",
+   "bodyHex": "31",
+   "expectedData": "1"
+  },
+  {
+   "name": "ascii 0x32",
+   "bodyHex": "32",
+   "expectedData": "2"
+  },
+  {
+   "name": "ascii 0x33",
+   "bodyHex": "33",
+   "expectedData": "3"
+  },
+  {
+   "name": "ascii 0x34",
+   "bodyHex": "34",
+   "expectedData": "4"
+  },
+  {
+   "name": "ascii 0x35",
+   "bodyHex": "35",
+   "expectedData": "5"
+  },
+  {
+   "name": "ascii 0x36",
+   "bodyHex": "36",
+   "expectedData": "6"
+  },
+  {
+   "name": "ascii 0x37",
+   "bodyHex": "37",
+   "expectedData": "7"
+  },
+  {
+   "name": "ascii 0x38",
+   "bodyHex": "38",
+   "expectedData": "8"
+  },
+  {
+   "name": "ascii 0x39",
+   "bodyHex": "39",
+   "expectedData": "9"
+  },
+  {
+   "name": "ascii 0x3A",
+   "bodyHex": "3a",
+   "expectedData": ":"
+  },
+  {
+   "name": "ascii 0x3B",
+   "bodyHex": "3b",
+   "expectedData": ";"
+  },
+  {
+   "name": "ascii 0x3C",
+   "bodyHex": "3c",
+   "expectedData": "\\u003C"
+  },
+  {
+   "name": "ascii 0x3D",
+   "bodyHex": "3d",
+   "expectedData": "="
+  },
+  {
+   "name": "ascii 0x3E",
+   "bodyHex": "3e",
+   "expectedData": "\\u003E"
+  },
+  {
+   "name": "ascii 0x3F",
+   "bodyHex": "3f",
+   "expectedData": "?"
+  },
+  {
+   "name": "ascii 0x40",
+   "bodyHex": "40",
+   "expectedData": "@"
+  },
+  {
+   "name": "ascii 0x41",
+   "bodyHex": "41",
+   "expectedData": "A"
+  },
+  {
+   "name": "ascii 0x42",
+   "bodyHex": "42",
+   "expectedData": "B"
+  },
+  {
+   "name": "ascii 0x43",
+   "bodyHex": "43",
+   "expectedData": "C"
+  },
+  {
+   "name": "ascii 0x44",
+   "bodyHex": "44",
+   "expectedData": "D"
+  },
+  {
+   "name": "ascii 0x45",
+   "bodyHex": "45",
+   "expectedData": "E"
+  },
+  {
+   "name": "ascii 0x46",
+   "bodyHex": "46",
+   "expectedData": "F"
+  },
+  {
+   "name": "ascii 0x47",
+   "bodyHex": "47",
+   "expectedData": "G"
+  },
+  {
+   "name": "ascii 0x48",
+   "bodyHex": "48",
+   "expectedData": "H"
+  },
+  {
+   "name": "ascii 0x49",
+   "bodyHex": "49",
+   "expectedData": "I"
+  },
+  {
+   "name": "ascii 0x4A",
+   "bodyHex": "4a",
+   "expectedData": "J"
+  },
+  {
+   "name": "ascii 0x4B",
+   "bodyHex": "4b",
+   "expectedData": "K"
+  },
+  {
+   "name": "ascii 0x4C",
+   "bodyHex": "4c",
+   "expectedData": "L"
+  },
+  {
+   "name": "ascii 0x4D",
+   "bodyHex": "4d",
+   "expectedData": "M"
+  },
+  {
+   "name": "ascii 0x4E",
+   "bodyHex": "4e",
+   "expectedData": "N"
+  },
+  {
+   "name": "ascii 0x4F",
+   "bodyHex": "4f",
+   "expectedData": "O"
+  },
+  {
+   "name": "ascii 0x50",
+   "bodyHex": "50",
+   "expectedData": "P"
+  },
+  {
+   "name": "ascii 0x51",
+   "bodyHex": "51",
+   "expectedData": "Q"
+  },
+  {
+   "name": "ascii 0x52",
+   "bodyHex": "52",
+   "expectedData": "R"
+  },
+  {
+   "name": "ascii 0x53",
+   "bodyHex": "53",
+   "expectedData": "S"
+  },
+  {
+   "name": "ascii 0x54",
+   "bodyHex": "54",
+   "expectedData": "T"
+  },
+  {
+   "name": "ascii 0x55",
+   "bodyHex": "55",
+   "expectedData": "U"
+  },
+  {
+   "name": "ascii 0x56",
+   "bodyHex": "56",
+   "expectedData": "V"
+  },
+  {
+   "name": "ascii 0x57",
+   "bodyHex": "57",
+   "expectedData": "W"
+  },
+  {
+   "name": "ascii 0x58",
+   "bodyHex": "58",
+   "expectedData": "X"
+  },
+  {
+   "name": "ascii 0x59",
+   "bodyHex": "59",
+   "expectedData": "Y"
+  },
+  {
+   "name": "ascii 0x5A",
+   "bodyHex": "5a",
+   "expectedData": "Z"
+  },
+  {
+   "name": "ascii 0x5B",
+   "bodyHex": "5b",
+   "expectedData": "["
+  },
+  {
+   "name": "ascii 0x5C",
+   "bodyHex": "5c",
+   "expectedData": "\\\\"
+  },
+  {
+   "name": "ascii 0x5D",
+   "bodyHex": "5d",
+   "expectedData": "]"
+  },
+  {
+   "name": "ascii 0x5E",
+   "bodyHex": "5e",
+   "expectedData": "^"
+  },
+  {
+   "name": "ascii 0x5F",
+   "bodyHex": "5f",
+   "expectedData": "_"
+  },
+  {
+   "name": "ascii 0x60",
+   "bodyHex": "60",
+   "expectedData": "\\u0060"
+  },
+  {
+   "name": "ascii 0x61",
+   "bodyHex": "61",
+   "expectedData": "a"
+  },
+  {
+   "name": "ascii 0x62",
+   "bodyHex": "62",
+   "expectedData": "b"
+  },
+  {
+   "name": "ascii 0x63",
+   "bodyHex": "63",
+   "expectedData": "c"
+  },
+  {
+   "name": "ascii 0x64",
+   "bodyHex": "64",
+   "expectedData": "d"
+  },
+  {
+   "name": "ascii 0x65",
+   "bodyHex": "65",
+   "expectedData": "e"
+  },
+  {
+   "name": "ascii 0x66",
+   "bodyHex": "66",
+   "expectedData": "f"
+  },
+  {
+   "name": "ascii 0x67",
+   "bodyHex": "67",
+   "expectedData": "g"
+  },
+  {
+   "name": "ascii 0x68",
+   "bodyHex": "68",
+   "expectedData": "h"
+  },
+  {
+   "name": "ascii 0x69",
+   "bodyHex": "69",
+   "expectedData": "i"
+  },
+  {
+   "name": "ascii 0x6A",
+   "bodyHex": "6a",
+   "expectedData": "j"
+  },
+  {
+   "name": "ascii 0x6B",
+   "bodyHex": "6b",
+   "expectedData": "k"
+  },
+  {
+   "name": "ascii 0x6C",
+   "bodyHex": "6c",
+   "expectedData": "l"
+  },
+  {
+   "name": "ascii 0x6D",
+   "bodyHex": "6d",
+   "expectedData": "m"
+  },
+  {
+   "name": "ascii 0x6E",
+   "bodyHex": "6e",
+   "expectedData": "n"
+  },
+  {
+   "name": "ascii 0x6F",
+   "bodyHex": "6f",
+   "expectedData": "o"
+  },
+  {
+   "name": "ascii 0x70",
+   "bodyHex": "70",
+   "expectedData": "p"
+  },
+  {
+   "name": "ascii 0x71",
+   "bodyHex": "71",
+   "expectedData": "q"
+  },
+  {
+   "name": "ascii 0x72",
+   "bodyHex": "72",
+   "expectedData": "r"
+  },
+  {
+   "name": "ascii 0x73",
+   "bodyHex": "73",
+   "expectedData": "s"
+  },
+  {
+   "name": "ascii 0x74",
+   "bodyHex": "74",
+   "expectedData": "t"
+  },
+  {
+   "name": "ascii 0x75",
+   "bodyHex": "75",
+   "expectedData": "u"
+  },
+  {
+   "name": "ascii 0x76",
+   "bodyHex": "76",
+   "expectedData": "v"
+  },
+  {
+   "name": "ascii 0x77",
+   "bodyHex": "77",
+   "expectedData": "w"
+  },
+  {
+   "name": "ascii 0x78",
+   "bodyHex": "78",
+   "expectedData": "x"
+  },
+  {
+   "name": "ascii 0x79",
+   "bodyHex": "79",
+   "expectedData": "y"
+  },
+  {
+   "name": "ascii 0x7A",
+   "bodyHex": "7a",
+   "expectedData": "z"
+  },
+  {
+   "name": "ascii 0x7B",
+   "bodyHex": "7b",
+   "expectedData": "{"
+  },
+  {
+   "name": "ascii 0x7C",
+   "bodyHex": "7c",
+   "expectedData": "|"
+  },
+  {
+   "name": "ascii 0x7D",
+   "bodyHex": "7d",
+   "expectedData": "}"
+  },
+  {
+   "name": "ascii 0x7E",
+   "bodyHex": "7e",
+   "expectedData": "~"
+  },
+  {
+   "name": "ascii 0x7F",
+   "bodyHex": "7f",
+   "expectedData": "\\u007F"
+  },
+  {
+   "name": "U+00A0",
+   "bodyHex": "c2a0",
+   "expectedData": "\\u00A0"
+  },
+  {
+   "name": "U+00E9",
+   "bodyHex": "c3a9",
+   "expectedData": "\\u00E9"
+  },
+  {
+   "name": "U+2028",
+   "bodyHex": "e280a8",
+   "expectedData": "\\u2028"
+  },
+  {
+   "name": "U+4E2D",
+   "bodyHex": "e4b8ad",
+   "expectedData": "\\u4E2D"
+  },
+  {
+   "name": "U+FEFF",
+   "bodyHex": "efbbbf",
+   "expectedData": "\\uFEFF"
+  },
+  {
+   "name": "U+FFFD",
+   "bodyHex": "efbfbd",
+   "expectedData": "\\uFFFD"
+  },
+  {
+   "name": "U+1F600",
+   "bodyHex": "f09f9880",
+   "expectedData": "\\uD83D\\uDE00"
+  },
+  {
+   "name": "invalid UTF-8: lone FF",
+   "bodyHex": "ff",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: truncated 2-byte",
+   "bodyHex": "61c3",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: truncated 3-byte",
+   "bodyHex": "e4b861",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: overlong 2-byte",
+   "bodyHex": "c0af",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: encoded surrogate ED A0 80",
+   "bodyHex": "eda080",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: encoded surrogate ED BF BF",
+   "bodyHex": "edbfbf",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: surrogate lead then ASCII",
+   "bodyHex": "eda061",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: ED 9F BF (U+D7FF, valid)",
+   "bodyHex": "ed9fbf",
+   "expectedData": "\\uD7FF"
+  },
+  {
+   "name": "invalid UTF-8: truncated ED 98",
+   "bodyHex": "ed98",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: overlong 3-byte",
+   "bodyHex": "e08080",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: overlong 4-byte",
+   "bodyHex": "f0808080",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: above U+10FFFF",
+   "bodyHex": "f4908080",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: invalid lead F5",
+   "bodyHex": "f5808080",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: encoded surrogate pair",
+   "bodyHex": "eda0bdedb880",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: lone continuation bytes",
+   "bodyHex": "8080",
+   "rejected": true
+  },
+  {
+   "name": "invalid UTF-8: truncated 3-byte then ASCII",
+   "bodyHex": "e18061",
+   "rejected": true
+  },
+  {
+   "name": "empty body",
+   "bodyHex": "",
+   "expectedData": ""
+  },
+  {
+   "name": "typical JSON",
+   "bodyHex": "7b22616d6f756e74223a3130302c226e616d65223a22e6b8ace8a9a6e69c83e593a1222c22656d6f6a69223a22f09f8eb0222c2268746d6c223a223c623e263c2f623e222c2271223a2269742773227d",
+   "expectedData": "{\\u0022amount\\u0022:100,\\u0022name\\u0022:\\u0022\\u6E2C\\u8A66\\u6703\\u54E1\\u0022,\\u0022emoji\\u0022:\\u0022\\uD83C\\uDFB0\\u0022,\\u0022html\\u0022:\\u0022\\u003Cb\\u003E\\u0026\\u003C/b\\u003E\\u0022,\\u0022q\\u0022:\\u0022it\\u0027s\\u0022}"
+  },
+  {
+   "name": "random #0",
+   "bodyHex": "6dcfaca4066003ba7ddfb6831272deceea3eee685e7402036dcaf85062467f79c93a542968e66bfe01d53d5fa294d87cc7c73eed3a9b",
+   "rejected": true
+  },
+  {
+   "name": "random #1",
+   "bodyHex": "ebb3a33c67dab7eb8d9bf3998280f3aab8891ff187bbbef3a6b98af3a48aa7f28a9eb2eaa7b8f2969cb7f180948d77e8888bf28fada3eb84b8e78e9bf0aeb599f19e88b34cf3b1b99d63f2b797a7e3b8bcf38380987e5af3848f83e3a9b6f285a1af06f09abeaae497be5722e7af980f08e4beaf65f4879199e7ab86f1b98a8c37e4b9b95f5f",
+   "expectedData": "\\uBCE3\\u003Cg\\u06B7\\uB35B\\uDB24\\uDC80\\uDB6B\\uDE09\\u001F\\uD8DF\\uDEFE\\uDB5B\\uDE4A\\uDB50\\uDEA7\\uD9E9\\uDFB2\\uA9F8\\uDA19\\uDF37\\uD8C1\\uDD0Dw\\u820B\\uD9FE\\uDF63\\uB138\\u739B\\uD87B\\uDD59\\uD938\\uDE33L\\uDB87\\uDE5Dc\\uDA9D\\uDDE7\\u3E3C\\uDACC\\uDC18~Z\\uDAD0\\uDFC3\\u3A76\\uD9D6\\uDC6F\\u0006\\uD82B\\uDFAA\\u45FEW\\u0022\\u7BD8\\u000F\\b\\u4FAFe\\uDBDD\\uDC59\\u7AC6\\uD9A4\\uDE8C7\\u4E79__"
+  },
+  {
+   "name": "random #2",
+   "bodyHex": "60b15b9b85a7fac5b516c3f70949c8281a89c18dd5d4896ac183fad4665180f8f532ed39a31a569715240e588dc04cbcfb9217239b4c2f5f0e210f1b9a6cddc44e5cd2146f11b6c31c3fbfebc4305d30e8c93c9733cfff12b7c141b9c2262c695b44552a70d19c41b287bcf3ebfa9705c595f94cb644a9449e57e6bbc0c6122a56a7877975bdf71d13d109d6682cc772e0fe231687b60569b10e99c5647569",
+   "rejected": true
+  },
+  {
+   "name": "random #3",
+   "bodyHex": "6fe9b392f48f809e1be4a38df0bb9399e6afa67c",
+   "expectedData": "o\\u9CD2\\uDBFC\\uDC1E\\u001B\\u48CD\\uD8AD\\uDCD9\\u6BE6|"
+  },
+  {
+   "name": "random #4",
+   "bodyHex": "50ceaea2f58cae12817f85ba1353132ece92e752fc3849922455b3d612f8d42a91fe2c948b7ac34a67445675207210d37fa48b25a303a1be7ed807173229f021366f9bb1b49a0eeb4d6f6ea71c989a18f0421443e68452384fd7690bde2c05bb4932ef391632779277ddc8b57c5d8e6c982ad33a08793de966969c5524fb829773c99b",
+   "rejected": true
+  },
+  {
+   "name": "random #5",
+   "bodyHex": "f09d8780e58397f18388984d3af293b391e8b594f1a4b49bf19293a8f1b086acf3af91a31cf2b49babf184b58ded9687f0bdb69223f1b1a0a7d58ee49e974df28b8abbf48ea4892628047a",
+   "expectedData": "\\uD834\\uDDC0\\u50D7\\uD8CC\\uDE18M:\\uDA0F\\uDCD1\\u8D54\\uD953\\uDD1B\\uD909\\uDCE8\\uD980\\uDDAC\\uDB7D\\uDC63\\u001C\\uDA91\\uDEEB\\uD8D3\\uDD4D\\uD587\\uD8B7\\uDD92#\\uD986\\uDC27\\u054E\\u4797M\\uD9EC\\uDEBB\\uDBFA\\uDD09\\u0026(\\u0004z"
+  },
+  {
+   "name": "random #6",
+   "bodyHex": "4792e8a4f20b3078e874ffd6eadd56c0a2c0fc9f76c8054fe913e2327d517558d5c9c20de4128bb25b5b54c61fd51e0701a222",
+   "rejected": true
+  },
+  {
+   "name": "random #7",
+   "bodyHex": "f18eb8b35ee5bdb4f3919d8bf2a59ca5f0a4849fe19a83f18ca484eca7b5eb828ae3a9aae9b79033e0bfb201ed85aae3818464f48580b21decadb1f3b99d974be690b201f182bbb3e9aa8c00f2a892bdf3a3a5a7f3a8b4a77ff1ba838cf2a787913de58b9bf3af95a33925e5bdaf4ef39db2a37bf0bbacbfea8b88f29a878419e69f94f0b8be94ed9a84046feabf87f0b596a5e4909beb9ba8e590b5e58194eb8883ea8e8ef1ae87b7ec82ba5e6ef09eaa8de38994f1a8ba83dba2e5b181196542e28b8ce68c95f282939aef8d9af19395a726f0b68aad1aeca280e49991e6bb81df8952e98b8a01e7bcacec818b1ff291909ae7ba8b6ded9e97e5b59cf488bfa31d",
+   "expectedData": "\\uD8FB\\uDE33^\\u5F74\\uDB05\\uDF4B\\uDA55\\uDF25\\uD850\\uDD1F\\u1683\\uD8F2\\uDD04\\uC9F5\\uB08A\\u3A6A\\u9DD03\\u0FF2\\u0001\\uD16A\\u3044d\\uDBD4\\uDC32\\u001D\\uCB71\\uDBA5\\uDF57K\\u6432\\u0001\\uD8CB\\uDEF3\\u9A8C\\u0000\\uDA61\\uDCBD\\uDB4E\\uDD67\\uDB63\\uDD27\\u007F\\uD9A8\\uDCCC\\uDA5C\\uDDD1=\\u52DB\\uDB7D\\uDD639%\\u5F6FN\\uDB37\\uDCA3{\\uD8AE\\uDF3F\\uA2C8\\uDA28\\uDDC4\\u0019\\u67D4\\uD8A3\\uDF94\\uD684\\u0004o\\uAFC7\\uD895\\uDDA5\\u441B\\uB6E8\\u5435\\u5054\\uB203\\uA38E\\uD978\\uDDF7\\uC0BA^n\\uD83A\\uDE8D\\u3254\\uD963\\uDE83\\u06E2\\u5C41\\u0019eB\\u22CC\\u6315\\uD9C9\\uDCDA\\uF35A\\uD90D\\uDD67\\u0026\\uD898\\uDEAD\\u001A\\uC880\\u4651\\u6EC1\\u07C9R\\u92CA\\u0001\\u7F2C\\uC04B\\u001F\\uDA05\\uDC1A\\u7E8Bm\\uD797\\u5D5C\\uDBE3\\uDFE3\\u001D"
+  },
+  {
+   "name": "random #8",
+   "bodyHex": "28f71dc9c833fe8215f272",
+   "rejected": true
+  },
+  {
+   "name": "random #9",
+   "bodyHex": "57f3afa581f2b1908cf39fabb7e2a38df18aabb802cd9ef396b89218e28b84f0ab97bef19395ae04f1a9a1b1e885b6f1878a9ff48ebe9df18cab95e6a88cf1aa83bfe18d94f0b5a1bf47f09ea6b2ed8c8406e9a89cf3ad8a812de5b0bcf3bd8fadf1a9b68be4a89eec85a4f3a4888ce495abf3b6b2bde2b8814af1bcaa8cec949ceb83a1f3b693bde2b589f3b19d84f2ad8f99f3b28eb124f48288a32064006ff1829598e4a1b7ea9b84f1839cb7e39d8be2a58af19ea7b3f2889fb156e8a0875f",
+   "expectedData": "W\\uDB7E\\uDD41\\uDA85\\uDC0C\\uDB3E\\uDEF7\\u28CD\\uD8EA\\uDEF8\\u0002\\u035E\\uDB1B\\uDE12\\u0018\\u22C4\\uD86D\\uDDFE\\uD90D\\uDD6E\\u0004\\uD966\\uDC71\\u8176\\uD8DC\\uDE9F\\uDBFB\\uDF9D\\uD8F2\\uDED5\\u6A0C\\uD968\\uDCFF\\u1354\\uD896\\uDC7FG\\uD83A\\uDDB2\\uD304\\u0006\\u9A1C\\uDB74\\uDE81-\\u5C3C\\uDBB4\\uDFED\\uD967\\uDD8B\\u4A1E\\uC164\\uDB50\\uDE0C\\u456B\\uDB9B\\uDCBD\\u2E01J\\uD9B2\\uDE8C\\uC51C\\uB0E1\\uDB99\\uDCFD\\u2D49\\uDB85\\uDF44\\uDA74\\uDFD9\\uDB88\\uDFB1$\\uDBC8\\uDE23 d\\u0000o\\uD8C9\\uDD58\\u4877\\uA6C4\\uD8CD\\uDF37\\u374B\\u294A\\uD93A\\uDDF3\\uD9E1\\uDFF1V\\u8807_"
+  },
+  {
+   "name": "random #10",
+   "bodyHex": "fd6b3a5eaf0e17605c445c0c5eb62d1465d1b4ec002a8614e82d1038db84c954c459d99293c7d3fa2a9b61b8b04bb6d7b7bcc8693b5c84b562213e5997540c0fb81b3ecabba4ef8ee099398acc4313dbaa5c2406214d5ead8504e09a6e6dcb2cb6243d78d553ca0ba1a777129eb49b2e176cf08e43c6bd8e3dbaf1378d5d48787a034f186cacc4ef398efc8287d0922871826f6ee34167850381b4605b2f84a65003e396a04841a7",
+   "rejected": true
+  },
+  {
+   "name": "random #11",
+   "bodyHex": "f39aa7bef286a0b445e3918b6f71ebabace29e8f674ae68bb4f2879ca00de0b08ce0a8a5e882a4e38794e19080f29b8aabf0a4b9bef283baa609f3819fb9ec9c8ee2a9a21ff0a6acb2e4bdbbf38f9e83494fe7b5bfeab9ace4bd83e9b096f18cb382eb958125e19590f194a2adf2b099a0ed8d932ae190895ff2878a8bf3a1858f4129f486a1b73ef2b695945ff1a687b72ef29d938cf18b82ad2dec9e8ae1beb410eaacbce486b5e6a48502e0bf9ef3a2b580e886a5f390b980",
+   "expectedData": "\\uDB2A\\uDDFE\\uD9DA\\uDC34E\\u344Boq\\uBAEC\\u278FgJ\\u62F4\\uD9DD\\uDF20\\r\\u0C0C\\u0A25\\u80A4\\u31D4\\u1400\\uDA2C\\uDEAB\\uD853\\uDE7E\\uD9CF\\uDEA6\\t\\uDAC5\\uDFF9\\uC70E\\u2A62\\u001F\\uD85A\\uDF32\\u4F7B\\uDAFD\\uDF83IO\\u7D7F\\uAE6C\\u4F43\\u9C16\\uD8F3\\uDCC2\\uB541%\\u1550\\uD912\\uDCAD\\uDA81\\uDE60\\uD353*\\u1409_\\uD9DC\\uDE8B\\uDB44\\uDD4FA)\\uDBDA\\uDC77\\u003E\\uDA99\\uDD54_\\uD958\\uDDF7.\\uDA35\\uDCCC\\uD8EC\\uDCAD-\\uC78A\\u1FB4\\u0010\\uAB3C\\u41B5\\u6905\\u0002\\u0FDE\\uDB4B\\uDD40\\u81A5\\uDB03\\uDE40"
+  },
+  {
+   "name": "random #12",
+   "bodyHex": "2e6ec26ebdbfc20638cfb6d009872a0047e267420acaf7765dfca72f089fe89e14b81a5f5e1cd3dcc2e4eded700895e5f513a8985e4c403408f332c976d882abec1b329098420cf50aa0bd5716beae656ac907f4d0836dd3df9546bb909fee40ad485e6299d59760a4cfd48cba3a41cad9b105546ee50ae48c86b098ae0cfc0169f2198f8cb7b437355a1b9c8bca695eebd6cf185c33dd44ff58138e26f33bda361dda34ede7d5b24584316e8279c52c4e6ab6cedbb8e7036f6bff1949bb22",
+   "rejected": true
+  },
+  {
+   "name": "random #13",
+   "bodyHex": "6501f0b6b8ab",
+   "expectedData": "e\\u0001\\uD89B\\uDE2B"
+  },
+  {
+   "name": "random #14",
+   "bodyHex": "a9e1a4d516231ff7584a4cab7820a1df574eaf65bba0948e43618d61b4a57dd4927b3289686bfd0ba0100c4d053e332b3ee5c19354524dc28c6b5ac803f29a53ac258e193c3f3fa702ea114c14ec31aa0159298bcd7c355989089b77bbecc9c87903c4a3be072476771e62ca6b2560144e465f9a754e00bd93fbc0970f0d2e39460b7c0827d3136d68168031f668bd82022403b0ee8a73bc21b8d45af21ce329",
+   "rejected": true
+  },
+  {
+   "name": "random #15",
+   "bodyHex": "f0908996f3a29881f18691ae4e55f1858ab5e1a1be25f3b688bcf1a2bd8aeaa5b61bd2956ceaa0b2e5958ff19390a7f19aad94ecbc953a00f28190a714eb9489f287b88f3b710e227ef3bb92b2eab2b0e3ab9862e9aebc5ce39ca2f29d8dadeb8287f395bd905eec8ab7f090b18de8a0a6e1a09ae9b191f2a7b580e892bfe2adb7f19787b1f1a3b39126e5b29ce6869b08f283a5816fe59795607360f0b8af9ce583adf0a19281f38a8aaf29e180a0eba68835f1a68189e3869cf18fa88eecb09b10f29dbaa63000f1ae84aff09393937b6bf1afadbde7849f16",
+   "expectedData": "\\uD800\\uDE56\\uDB49\\uDE01\\uD8D9\\uDC6ENU\\uD8D4\\uDEB5\\u187E%\\uDB98\\uDE3C\\uD94B\\uDF4A\\uA976\\u001B\\u0495l\\uA832\\u554F\\uD90D\\uDC27\\uD92A\\uDF54\\uCF15:\\u0000\\uD9C5\\uDC27\\u0014\\uB509\\uD9DF\\uDE0F;q\\u000E\\u0022~\\uDBAD\\uDCB2\\uACB0\\u3AD8b\\u9BBC\\\\\\u3722\\uDA34\\uDF6D\\uB087\\uDB17\\uDF50^\\uC2B7\\uD803\\uDC4D\\u8826\\u181A\\u9C51\\uDA5F\\uDD40\\u84BF\\u2B77\\uD91C\\uDDF1\\uD94F\\uDCD1\\u0026\\u5C9C\\u619B\\b\\uD9CE\\uDD41o\\u55D5\\u0060s\\u0060\\uD8A2\\uDFDC\\u50ED\\uD845\\uDC81\\uDAE8\\uDEAF)\\u1020\\uB9885\\uD958\\uDC49\\u319C\\uD8FE\\uDE0E\\uCC1B\\u0010\\uDA37\\uDEA60\\u0000\\uD978\\uDD2F\\uD80D\\uDCD3{k\\uD97E\\uDF7D\\u711F\\u0016"
+  },
+  {
+   "name": "random #16",
+   "bodyHex": "4a8acc09c0499a5b5a7cab75fc71",
+   "rejected": true
+  },
+  {
+   "name": "random #17",
+   "bodyHex": "e0b2b90031f09699a0f389b8b8e386901cf38d8fb0f3bfaab5e0b890e78d9df3959585e49eb9e5bfa44bf3b18ebbf0ae8d94e4a1b908f09fb79fe3a4b8e9a3bae8a991f2b5b794e28694e9be8e4af481a3906613eb98b8f2ac8d92e8b281293a37ca94f29f9ab3f18f88a6ed918ee8b48df387b3a463e5bbbbe194a3f29abd9a2759f385acb9eaab84f286ac8bf0ae8580f3938bb9e881875446ebb090e88199523be0adbae6b8b9e0b9aae78aaee79f8de68980e0b9a229f3b494a8f1a182b3f0909090f3b18a8ee4b59bf0b4b582354c4cf1bf99837b2af18e82b7e4b2ad5756e68e8af0b29e8df4889aaf203504e8a38d15e0b0a9",
+   "expectedData": "\\u0CB9\\u00001\\uD819\\uDE60\\uDAE7\\uDE38\\u3190\\u001C\\uDAF4\\uDFF0\\uDBBE\\uDEB5\\u0E10\\u735D\\uDB15\\uDD45\\u47B9\\u5FE4K\\uDB84\\uDFBB\\uD878\\uDF54\\u4879\\b\\uD83F\\uDDDF\\u3938\\u98FA\\u8A51\\uDA97\\uDDD4\\u2194\\u9F8EJ\\uDBC6\\uDCD0f\\u0013\\uB638\\uDA70\\uDF52\\u8C81):7\\u0294\\uDA3D\\uDEB3\\uD8FC\\uDE26\\uD44E\\u8D0D\\uDADF\\uDCE4c\\u5EFB\\u1523\\uDA2B\\uDF5A\\u0027Y\\uDAD6\\uDF39\\uAAC4\\uD9DA\\uDF0B\\uD878\\uDD40\\uDB0C\\uDEF9\\u8047TF\\uBC10\\u8059R;\\u0B7A\\u6E39\\u0E6A\\u72AE\\u77CD\\u6240\\u0E62)\\uDB91\\uDD28\\uD944\\uDCB3\\uD801\\uDC10\\uDB84\\uDE8E\\u4D5B\\uD893\\uDD425LL\\uD9BD\\uDE43{*\\uD8F8\\uDCB7\\u4CADWV\\u638A\\uD889\\uDF8D\\uDBE1\\uDEAF 5\\u0004\\u88CD\\u0015\\u0C29"
+  },
+  {
+   "name": "random #18",
+   "bodyHex": "8765ff01d6d2df9211edda782583a56652e9e056b74be5a45a0f92758d560133baba50cb0ecc75100bb2840b70eea767c637ae6126f0f204214af6b90e644ee69cedee5c15c7324351ec16ad4c3384978c1aec555afae20e10cf65356a64f872dd41287a4d1230cb9c48c2cdbc0e76ee40cce415e2f43743bcf457aa90c23f5559f9a9b3f617c15a10e1de8b34309f0551d7750f273bc23ae56937d73095f29e857e8acea0a8105d237cae0e3e44d0508e",
+   "rejected": true
+  },
+  {
+   "name": "random #19",
+   "bodyHex": "f091b2b96703f3aca49fec93a3727be5bab6e49a843f25f18d88b4e48587f2a48584e985abe38f9e610d70f0a193b2f1aa97b9f09da8a9f19180a9e5a6ab30f3b3adabf2b8b9bae9bbba",
+   "expectedData": "\\uD807\\uDCB9g\\u0003\\uDB72\\uDD1F\\uC4E3r{\\u5EB6\\u4684?%\\uD8F4\\uDE34\\u4147\\uDA50\\uDD44\\u916B\\u33DEa\\rp\\uD845\\uDCF2\\uD969\\uDDF9\\uD836\\uDE29\\uD904\\uDC29\\u59AB0\\uDB8E\\uDF6B\\uDAA3\\uDE7A\\u9EFA"
+  }
+ ]
+}
